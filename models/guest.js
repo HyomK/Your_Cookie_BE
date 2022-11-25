@@ -12,6 +12,7 @@ module.exports = class Guest extends Sequelize.Model {
                     type: Sequelize.JSON,
                     allowNull: true,
                 },
+                score: { type: Sequelize.INTEGER, allowNull: true },
                 comment: {
                     type: Sequelize.STRING(30),
                     allowNull: true,

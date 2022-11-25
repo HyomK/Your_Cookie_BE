@@ -3,8 +3,11 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const { sequelize } = require("./models");
 
+const hostRotuer = require("./router/host");
+const guestRouter = require("./router/guest");
+
 // Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = 8003;
+const PORT = 8000;
 const app = express();
 
 sequelize
@@ -19,7 +22,7 @@ sequelize
 app.use(
     cors({
         origin: true, // ["http://localhost:3000"],
-        credentials: true,
+        // credentials: true,
     })
 );
 app.use(bodyParser.json());
@@ -28,6 +31,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set("port", process.env.PORT || PORT);
 
+app.use("/host", hostRotuer);
+app.use("/guest", guestRouter);
 app.use("/", (req, res) => {
     res.status(200).send("Auth server");
 });
