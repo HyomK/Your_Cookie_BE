@@ -72,7 +72,7 @@ module.exports = {
                 });
             }
 
-            await Guest.create({
+            const guest = await Guest.create({
                 name: guestName,
                 comment: comment,
                 score: score,
@@ -83,6 +83,40 @@ module.exports = {
             });
             return res.status(200).json({
                 message: "게스트 등록 성공",
+                data: { guest: guest.dataValues },
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ message: error.message });
+        }
+    },
+    updateComment: async (req, res) => {
+        try {
+            const guestId = req.body.guestId;
+            const comment = req.body.comment;
+
+            const guest = await Guest.findOne({ where: { id: guestId } })
+                .catch((err) => {
+                    console.log(err);
+                    return res.status(400).json({
+                        message: "게스트 조회 실패",
+                    });
+                })
+                .then((res) => {
+                    return res.dataValues;
+                });
+            const updateGuest = await Guest.update(
+                { comment: comment },
+                { where: { id: guest.id } }
+            ).catch((err) => {
+                return res.status(400).json({
+                    message: "메세지 저장 실패",
+                });
+            });
+
+            return res.status(200).json({
+                message: "메세지 등록 성공",
+                data: { guest: updateGuest.dataValues },
             });
         } catch (error) {
             console.log(error);
