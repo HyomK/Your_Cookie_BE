@@ -22,7 +22,7 @@ sequelize
 app.use(
     cors({
         origin: true, // ["http://localhost:3000"],
-        // credentials: true,
+        credentials: true,
     })
 );
 app.use(bodyParser.json());
