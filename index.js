@@ -7,7 +7,7 @@ const hostRotuer = require("./router/host");
 const guestRouter = require("./router/guest");
 
 // Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 const app = express();
 
 sequelize
